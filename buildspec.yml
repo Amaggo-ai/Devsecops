@@ -7,8 +7,8 @@ later)
     NODE_OPTIONS: "--max_old_space_size=4096"
 
 phases:
-  install:
-    runtime-versions:
+ install:
+  runtime-versions:
       nodejs: 18
       python: 3.9
     commands:
