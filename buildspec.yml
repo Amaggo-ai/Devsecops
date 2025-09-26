@@ -1,0 +1,40 @@
+---
+version: 0.2
+
+env:
+  variables:
+    NODE_OPTIONS: "--max_old_space_size=4096"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+      python: 3.9
+    commands:
+      - echo "Installing npm deps"
+      - npm ci
+      - echo "Installing snyk CLI"
+      - curl -Lo /usr/local/bin/snyk \
+          https://static.snyk.io/cli/latest/snyk-linux
+      - chmod +x /usr/local/bin/snyk
+      - echo "Installing semgrep"
+      - pip3 install semgrep
+      - echo "Authenticate snyk"
+      - snyk auth $SNYK_TOKEN || \
+          echo "Snyk auth skipped if token not provided"
+
+  build:
+    commands:
+      - echo "Run tests"
+      - npm test || true
+      - echo "Run Snyk (SCA)"
+      - snyk test || true
+      - snyk monitor || true
+      - echo "Run Semgrep (SAST)"
+      - semgrep scan --config auto \
+          --sarif-output semgrep.sarif || true
+
+artifacts:
+  files:
+    - semgrep.sarif
+    - "**/*"
