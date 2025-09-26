@@ -1,8 +1,7 @@
+----
 version: 0.2
 
 env:
-  # SNYK_TOKEN should be provided as an environment variable (see AWS Secrets Manager steps 
-later)
   variables:
     NODE_OPTIONS: "--max_old_space_size=4096"
 
@@ -35,5 +34,4 @@ phases:
 artifacts:
   files:
     - semgrep.sarif
-    - '**/*'
-
+    - "**/*"
