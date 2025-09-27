@@ -1,0 +1,25 @@
+----
+version: 0.2
+
+env:
+  variables:
+    TARGET_URL: "https://your-deployed-app-url"  # Change to your actual app URL
+    REPORT_NAME: "zap-report.html"
+
+phases:
+  install:
+    commands:
+      - echo "Installing Docker"
+      - apt-get update && apt-get install -y docker.io
+      - echo "Pulling OWASP ZAP Docker image"
+      - docker pull owasp/zap2docker-stable
+
+  build:
+    commands:
+      - echo "Running OWASP ZAP baseline scan"
+      - docker run --rm -v $(pwd):/zap/wrk/:rw owasp/zap2docker-stable zap-baseline.py \
+        -t $TARGET_URL -r $REPORT_NAME
+
+artifacts:
+  files:
+    - $REPORT_NAME
