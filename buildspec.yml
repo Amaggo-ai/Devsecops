@@ -14,8 +14,7 @@ phases:
       - echo "Installing npm deps"
       - npm install
       - echo "Installing snyk CLI"
-      - curl -Lo /usr/local/bin/snyk \
-          https://static.snyk.io/cli/latest/snyk-linux
+      - curl -Lo /usr/local/bin/snyk https://static.snyk.io/cli/latest/snyk-linux
       - chmod +x /usr/local/bin/snyk
       - echo "Installing semgrep"
       - pip3 install semgrep
