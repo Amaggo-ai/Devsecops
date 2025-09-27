@@ -12,7 +12,7 @@ phases:
       python: 3.9
     commands:
       - echo "Installing npm deps"
-      - npm ci
+      - npm install
       - echo "Installing snyk CLI"
       - curl -Lo /usr/local/bin/snyk \
           https://static.snyk.io/cli/latest/snyk-linux
