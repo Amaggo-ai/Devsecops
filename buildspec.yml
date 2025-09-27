@@ -19,8 +19,7 @@ phases:
       - echo "Installing semgrep"
       - pip3 install semgrep
       - echo "Authenticate snyk"
-      - snyk auth $SNYK_TOKEN || \
-          echo "Snyk auth skipped if token not provided"
+      - snyk auth $SNYK_TOKEN || echo "Snyk auth skipped if token not provided"
 
   build:
     commands:
@@ -30,8 +29,7 @@ phases:
       - snyk test || true
       - snyk monitor || true
       - echo "Run Semgrep (SAST)"
-      - semgrep scan --config auto \
-          --sarif-output semgrep.sarif || true
+      - semgrep scan --config auto --sarif-output semgrep.sarif || true
 
 artifacts:
   files:
